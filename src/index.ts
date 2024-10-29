@@ -45,3 +45,4 @@ const reducer = createReducer<State, Action>(
 // Should work:
 reducer(undefined, { type: "INCREMENT", payload: 5 });
 // Should show type error:
+reducer(undefined, { type: "INVALID", payload: true });
