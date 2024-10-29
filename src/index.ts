@@ -21,6 +21,9 @@ function createReducer<S, A extends { type: string; payload: any }>(
 ) {
   return (state: S = initialState, action: A): S => {
     const handler = handlers[action.type as keyof typeof handlers];
+    if (!(action.type in handlers)) {
+      throw new Error("Invalid action type");
+    }
     return handler ? handler(state, action as any) : state;
   };
 }
@@ -42,4 +45,3 @@ const reducer = createReducer<State, Action>(
 // Should work:
 reducer(undefined, { type: "INCREMENT", payload: 5 });
 // Should show type error:
-reducer(undefined, { type: "INVALID", payload: true });
